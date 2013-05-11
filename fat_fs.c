@@ -579,7 +579,6 @@ uint8_t fat_free_cluster_chain(sdcard_t *sdcard, uint32_t startcluster, uint8_t 
 			{
 				if(!fat_write_sector(sdcard, cluster, sector, 0))
 				{
-					// TODO: Abort?
 				}
 			} 
 		}
@@ -1015,7 +1014,6 @@ dir_short_t * fat_find_sfn(sdcard_t *sdcard, uint32_t startcluster, const char *
 /*******************************************************************
 * Find the first free entry that can contain "entries" number
 * of consecutive free entries
-* TODO: check rootdir entry limit for FAT16
 *
 * @param sdcard			SD Card structure
 * @param startcluster	Cluster to start looking from
@@ -1432,7 +1430,7 @@ uint8_t fat_truncate_file(sdcard_t *sdcard, uint32_t startcluster, const char * 
 	// Update filesize
 	dir->DIR_FileSize = 0;
 	
-	// TODO: Is the last loaded sector always the correct one?
+	// Write the directory entry
 	if(!sd_write_block(sdcard, sdcard->loaded_sector, 0))
 	{
 		return 0;

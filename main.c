@@ -18,7 +18,14 @@
 * Device: atmega128
 *
 * TODO
-* - fopen support with full paths, at the moment only root directory is supported
+* - Add usage examples
+* - Update FSInfo structure on the partition
+* - fat_fopen: Support full paths, at the moment only files root directory is supported
+* - fat_find_free_entry: Check rootdir limit for FAT16
+* - fat_write_file: Update last access time?
+*
+* Changelog
+*
 *
 */
 #include <stdio.h>
