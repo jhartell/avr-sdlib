@@ -20,6 +20,7 @@
 * TODO
 * - Add usage examples
 * - Update FSInfo structure on the partition
+* - Add more checks to make sure the SD card is inserted and inited
 * - fat_fopen: Support full paths, at the moment only files root directory is supported
 * - fat_find_free_entry: Check rootdir limit for FAT16
 * - fat_write_file: Update last access time?
