@@ -22,11 +22,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
-#include <avr/io.h>
-#include <avr/pgmspace.h>
-#include <avr/eeprom.h>
 #include "main.h"
 #include "comms.h"
 #include "sd.h"
@@ -1052,6 +1047,7 @@ fat_entry * fat_find_free_entry(sdcard_t *sdcard, uint32_t startcluster, uint8_t
 	{
 		if(!fat_read_sector(sdcard, startcluster, sector))
 		{
+			free(firstentry);
 			return 0;
 		}
 		
@@ -1076,6 +1072,7 @@ fat_entry * fat_find_free_entry(sdcard_t *sdcard, uint32_t startcluster, uint8_t
 				
 				count++;
 				
+				// We have found the needed number of free entries
 				if(count == entries)
 				{
 					return firstentry;
@@ -1093,6 +1090,7 @@ fat_entry * fat_find_free_entry(sdcard_t *sdcard, uint32_t startcluster, uint8_t
 	}
 	
 	printf("End of function\n");
+	free(firstentry);
 	return NULL;
 }
 

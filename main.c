@@ -18,15 +18,22 @@
 * Device: atmega128
 *
 * TODO
-* - Add usage examples
-* - Update FSInfo structure on the partition
-* - Add more checks to make sure the SD card is inserted and inited
-* - fat_fopen: Support full paths, at the moment only files root directory is supported
-* - fat_find_free_entry: Check rootdir limit for FAT16
-* - fat_write_file: Update last access time?
+* ************************************************
+* Add usage examples
+* Remove/decrease debug-statements, the printf-strings waste a lot of memory
+* Disable external RAM and verify that it works with the 4kB RAM available in the mega128
+* Update Free_Count and Nxt_Free in the FSInfo structure on the partition, whenever necessary
+* Add more checks to make sure the SD card is inserted and inited before operations
+* Create folders support
+* Delete files and folders support
+* Rename files and folders support
+* fat_fopen: Support full paths, at the moment only files in the root directory are supported
 *
 * Changelog
-*
+* ************************************************
+* 12.05.2013
+* - Fixed potential memory leak in fat_find_free_entry()
+* - Cleaned up additional includes
 *
 */
 #include <stdio.h>
@@ -34,9 +41,6 @@
 #include <string.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
-#include <avr/io.h>
-#include <avr/pgmspace.h>
-#include <avr/eeprom.h>
 #include "main.h"
 #include "sd.h"
 #include "fat_fs.h"
@@ -86,9 +90,8 @@ void print_mem_usage(void)
 int main(void)
 {
 	sdcard_t *sdcard;
-	led_status = 0;
-	//uint8_t leds = 0;
 	uint8_t sdresponse = 0;
+	led_status = 0;
 	
 	// Set stream handler for printf
 	stdout = &usart_stdout;
@@ -220,7 +223,6 @@ int main(void)
 			}
 			else
 			{
-				//sdcard->inited = 0;
 				printf("-- Init Failed --\n");
 			}
 			
@@ -260,4 +262,3 @@ int main(void)
 	
 	return(0);
 }
-

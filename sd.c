@@ -22,11 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
 #include <avr/io.h>
-#include <avr/pgmspace.h>
-#include <avr/eeprom.h>
 #include "main.h"
 #include "sd.h"
 #include "comms.h"
